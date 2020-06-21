@@ -1,0 +1,35 @@
+.message {
+  margin-bottom: 5px;
+
+  &.mine {
+    p {
+      background-color: #0084ff;
+      color: #fff;
+    }
+  }
+
+  &.not-mine {
+    p {
+      background-color: #eee;
+      color: #000;
+    }
+  }
+
+  p {
+    display: inline-flex;
+    border-radius: 30px;
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, .2);
+    padding: 4px 11px;
+    font-size: 14px;
+    margin: 0;
+    clear: both;
+    font-family: Helvetica, Arial, sans-serif;
+    letter-spacing: .3px;
+  }
+
+  span {
+    opacity: 0.5;
+    font-size: 14px;
+    padding-left: 3px;
+  }
+}
