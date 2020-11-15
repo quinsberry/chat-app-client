@@ -27,6 +27,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "https://agile-sierra-89238.herokuapp.com",
   "eslintConfig": {
     "extends": "react-app"
   },
