@@ -9,16 +9,14 @@ import './App.scss'
 
 import { TLoginParams, TUsers, TMessage, TRoom } from './types/types'
 
-
 const App: React.FC = () => {
-
   const [state, dispatch] = React.useReducer(reducer, {
     isAuth: false,
     roomId: null,
     userName: null,
     users: [],
     messages: [],
-    error: null
+    error: null,
   })
 
   React.useEffect(() => {
@@ -26,17 +24,25 @@ const App: React.FC = () => {
     socket.on('ROOM:NEW_MESSAGE', actions.addMessage)
   }, [])
 
+  React.useEffect(() => {
+    const ele = document.getElementById('preloader')
+    if (ele) {
+      ele?.classList.add('available')
+      setTimeout(() => {
+        if (ele) ele.outerHTML = ''
+      }, 2000)
+    }
+  }, [])
 
   const actions = {
     setLoginParams: (loginParams: TLoginParams) => dispatch({ type: 'JOINED', payload: loginParams }),
     addMessage: (newMsg: TMessage) => dispatch({ type: 'NEW_MESSAGE', payload: newMsg }),
     setUsers: (users: TUsers) => dispatch({ type: 'SET_USERS', payload: users }),
     setData: (data: TRoom) => dispatch({ type: 'SET_DATA', payload: data }),
-    setErrors: (error: string | null) => dispatch({ type: 'SET_ERRORS', payload: error })
+    setErrors: (error: string | null) => dispatch({ type: 'SET_ERRORS', payload: error }),
   }
 
   const onLogin = async (loginParams: TLoginParams) => {
-
     socket.emit('ROOM:JOIN', loginParams)
     const res = await getRoomData(loginParams.roomId)
     console.log(res)
@@ -46,26 +52,23 @@ const App: React.FC = () => {
     }
   }
 
-
   return (
     <div className="wrapper">
       {!state.isAuth ? (
         <>
           <Login onLogin={onLogin} setErrors={actions.setErrors} />
-          {state.error && (
-            <ErrorPopUp error={state.error} setErrors={actions.setErrors} />
-          )}
+          {state.error && <ErrorPopUp error={state.error} setErrors={actions.setErrors} />}
         </>
       ) : (
-          <Chat
-            users={state.users}
-            messages={state.messages}
-            setErrors={actions.setErrors}
-            userName={state.userName}
-            roomId={state.roomId}
-            addMessage={actions.addMessage} />
-        )
-      }
+        <Chat
+          users={state.users}
+          messages={state.messages}
+          setErrors={actions.setErrors}
+          userName={state.userName}
+          roomId={state.roomId}
+          addMessage={actions.addMessage}
+        />
+      )}
     </div>
   )
 }
