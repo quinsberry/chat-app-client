@@ -3,7 +3,7 @@
 ## Description
 
 This is a client side of simple chat application where I use websockets. </br>
-[Here is a server side](https://github.com/quinsberry/chat-app-server) </br>
+[Link to chat](https://simple-chatminator.herokuapp.com/) | [Link to server code](https://github.com/quinsberry/chat-app-server) </br>
 </br>
 
 **Technologies:** React, Socket.io, TypeScript </br>
